@@ -1,0 +1,17 @@
+# TAGE
+tage/
+
+.idea/
+
+groovy/
+
+Scratches and Consoles/
+
+*.iml
+*.groovy
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
