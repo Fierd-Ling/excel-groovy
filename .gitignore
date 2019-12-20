@@ -3,6 +3,8 @@
 
 groovy/
 
+target/
+
 Scratches and Consoles/
 
 *.iml
