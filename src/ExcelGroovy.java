@@ -233,11 +233,9 @@ public class ExcelGroovy {
             }
         });
         // 普通字段结束
-        builder.append("\n").append(
+        builder.append(
                 "\n").append(
-                "        }\n").append(
-                "\n").append(
-                "        ");
+                "        }\n");
     }
 
     private static void builderString(Map<String, String> map, StringBuilder builder,
@@ -294,14 +292,13 @@ public class ExcelGroovy {
             // 获取唯一索引
             List<String> uniqueList = mapMap.get("唯一性索引");
             if (uniqueList != null && uniqueList.size() > 0) {
-                uniqueList.forEach(a -> builder.append("\n").append(
-                        "        addUniqueConstraint(columnNames:").append("\"").append(a).append("\", tableName: \"")
+                uniqueList.forEach(a -> builder.append("        addUniqueConstraint(columnNames:").append("\"").append(a).append("\", tableName: \"")
                         .append(tableName).append("\", constraintName: \"请输入唯一索引名称\")\n"));
             }
             List<String> indexList = mapMap.get("普通索引");
             if (indexList != null && indexList.size() > 0) {
                 indexList.forEach(a -> {
-                    builder.append("createIndex(tableName: \"").append(tableName)
+                    builder.append("        createIndex(tableName: \"").append(tableName)
                             .append("\", indexName: \"请输入普通索引名称\") {\n");
                     List<String> columns = Arrays.asList(a.split(","));
                     columns.forEach(s -> {
