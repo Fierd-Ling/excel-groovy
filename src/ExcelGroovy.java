@@ -31,8 +31,8 @@ public class ExcelGroovy {
 
     public static void main(String[] args) throws IOException {
         createFile("lingyun.zhong@hand-china.com",
-                "C:\\Users\\TF\\Desktop\\一步制造\\999 一步云制造产品研发\\35 表设计\\一步云制造 产品研发 LMDS服务表设计 V1.2.xls",
-                "资源TPM设置");
+                "C:\\Users\\TF\\Desktop\\一步制造\\999 一步云制造产品研发\\35 表设计\\一步云制造 产品研发 LWMS服务表设计 V1.1.xls",
+                "标签实物","标签历史");
     }
 
 
