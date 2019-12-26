@@ -1,9 +1,9 @@
 # TAGE
 .idea/
 
-#groovy/
+groovy/
 
-#target/*
+target/
 
 Scratches and Consoles/
 
