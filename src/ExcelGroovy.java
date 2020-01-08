@@ -31,8 +31,8 @@ public class ExcelGroovy {
 
     public static void main(String[] args) throws IOException {
         createFile("lingyun.zhong@hand-china.com",
-                "C:\\Users\\TF\\Desktop\\一步制造\\999 一步云制造产品研发\\35 表设计\\一步云制造 产品研发 LWMS服务表设计 V1.1.xls",
-                "标签实物","标签历史");
+                "C:\\Users\\TF\\Desktop\\一步制造\\999 一步云制造产品研发\\35 表设计\\一步云制造 产品研发 LWMS服务表设计 V2.0.xls",
+                "批次");
     }
 
 
@@ -52,6 +52,7 @@ public class ExcelGroovy {
     private static void getCellValue(Sheet sheet, String email) throws IOException {
         Map<String, Map<String, String>> cellMap = new HashMap<>(16);
         Map<String, List<String>> listMap = new HashMap<>(16);
+        List<String> keyList = new ArrayList<>();
         String primaryKey = null;
         String tableName = null;
         String tableDes = null;
@@ -127,10 +128,12 @@ public class ExcelGroovy {
                 if (c == 6) {
                     cellValueMap.put("des", cellValue);
                     cellMap.put(mapKey, cellValueMap);
+                    // 记录字段位置
+                    keyList.add(mapKey);
                 }
             }
         }
-        createGroovyString(cellMap, listMap, primaryKey, tableName, tableDes, email);
+        createGroovyString(cellMap, listMap, primaryKey, tableName, tableDes, email, keyList);
     }
 
     private static void index(String mapKey, Map<String, List<String>> listMap, Row row) {
@@ -161,7 +164,7 @@ public class ExcelGroovy {
                                            Map<String, List<String>> listMap,
                                            String primaryKey,
                                            String tableName,
-                                           String tableDes, String email) throws IOException {
+                                           String tableDes, String email, List<String> keyList) throws IOException {
         StringBuilder builder = new StringBuilder();
         tableHeader(tableName, tableDes, builder, email);
         if (!tableName.toLowerCase().contains("_tl")) {
@@ -169,7 +172,7 @@ public class ExcelGroovy {
             baseTable(builder);
         }
         // 字段
-        column(primaryKey, cellMap, builder);
+        column(primaryKey, cellMap, builder, keyList);
         // 索引
         createIndex(builder, listMap, tableName);
         changeLogEnd(builder);
@@ -223,13 +226,13 @@ public class ExcelGroovy {
                 "            }\n");
     }
 
-    private static void column(String primaryKey, Map<String, Map<String, String>> cellMap, StringBuilder builder) {
-        cellMap.forEach((key, value) -> {
+    private static void column(String primaryKey, Map<String, Map<String, String>> cellMap, StringBuilder builder, List<String> keyList) {
+        keyList.forEach(key -> {
             // 判断是不是主键
             if (key.equals(primaryKey)) {
-                builderString(value, builder, true, key);
+                builderString(cellMap.get(key), builder, true, key);
             } else {
-                builderString(value, builder, false, key);
+                builderString(cellMap.get(key), builder, false, key);
             }
         });
         // 普通字段结束
